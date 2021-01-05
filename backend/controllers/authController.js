@@ -11,11 +11,11 @@ const cloudinary = require('cloudinary');
 // Register a user   => /api/v1/register
 exports.registerUser = catchAsyncErrors(async (req, res, next) => {
 
-    // const result = await cloudinary.v2.uploader.upload(req.body.avatar, {
-    //     folder: 'avatars',
-    //     width: 150,
-    //     crop: "scale"
-    // })
+    const result = await cloudinary.v2.uploader.upload(req.body.avatar, {
+        folder: 'avatars',
+        width: 150,
+        crop: "scale"
+    })
 
     const { name, email, password } = req.body;
 
@@ -23,17 +23,10 @@ exports.registerUser = catchAsyncErrors(async (req, res, next) => {
         name,
         email,
         password,
-        // avatar: {
-        //     public_id: result.public_id,
-        //     url: result.secure_url
-        // }
-    })
-
-    const token = user.getJwtToken()
-
-    res.status(201).json({
-        success: true,
-        token
+        avatar: {
+            public_id: result.public_id,
+            url: result.secure_url
+        }
     })
 
     sendToken(user, 200, res)
@@ -46,30 +39,22 @@ exports.loginUser = catchAsyncErrors(async (req, res, next) => {
 
     // Checks if email and password is entered by user
     if (!email || !password) {
-        return next(new ErrorHandler('Proszę wprowadź hasło i email', 400))
+        return next(new ErrorHandler('Please enter email & password', 400))
     }
 
     // Finding user in database
     const user = await User.findOne({ email }).select('+password')
 
     if (!user) {
-        return next(new ErrorHandler('Niepoprawny email lub hasło', 401));
+        return next(new ErrorHandler('Invalid Email or Password', 401));
     }
 
     // Checks if password is correct or not
     const isPasswordMatched = await user.comparePassword(password);
 
     if (!isPasswordMatched) {
-        return next(new ErrorHandler('Niepoprawne hasełko', 401));
+        return next(new ErrorHandler('Invalid Email or Password', 401));
     }
-
-    // const token = user.getJwtToken()
-
-    // res.status(200).json({
-    //     success:true,
-    //     token
-    // })
-
 
     sendToken(user, 200, res)
 })
@@ -80,7 +65,7 @@ exports.forgotPassword = catchAsyncErrors(async (req, res, next) => {
     const user = await User.findOne({ email: req.body.email });
 
     if (!user) {
-        return next(new ErrorHandler('Użytkownik nie został znaleziony pod tym adresem email', 404));
+        return next(new ErrorHandler('User not found with this email', 404));
     }
 
     // Get reset token
@@ -89,24 +74,21 @@ exports.forgotPassword = catchAsyncErrors(async (req, res, next) => {
     await user.save({ validateBeforeSave: false });
 
     // Create reset password url
-    // const resetUrl = `${process.env.FRONTEND_URL}/password/reset/${resetToken}`;
-    // Create reset password url
     const resetUrl = `${req.protocol}://${req.get('host')}/password/reset/${resetToken}`;
 
-
-    const message = `Twoje hasło resetujące token jest następujące:\n\n${resetUrl}\n\nJeśli nie chciałeś resetowego email, zignoruj tę wiadomość.`
+    const message = `Your password reset token is as follow:\n\n${resetUrl}\n\nIf you have not requested this email, then ignore it.`
 
     try {
 
         await sendEmail({
             email: user.email,
-            subject: 'ShopIT reset Hasła',
+            subject: 'ShopIT Password Recovery',
             message
         })
 
         res.status(200).json({
             success: true,
-            message: `Email został wysłany do: ${user.email}`
+            message: `Email sent to: ${user.email}`
         })
 
     } catch (error) {
@@ -132,14 +114,12 @@ exports.resetPassword = catchAsyncErrors(async (req, res, next) => {
     })
 
     if (!user) {
-        return next(new ErrorHandler('Hasło resetujące jest nieprawidłowe lub token wygasł', 400))
+        return next(new ErrorHandler('Password reset token is invalid or has been expired', 400))
     }
 
     if (req.body.password !== req.body.confirmPassword) {
-        return next(new ErrorHandler('Hasło nie pasuje koleżko.', 400))
+        return next(new ErrorHandler('Password does not match', 400))
     }
-
-
 
     // Setup new password
     user.password = req.body.password;
@@ -172,7 +152,7 @@ exports.updatePassword = catchAsyncErrors(async (req, res, next) => {
     // Check previous user password
     const isMatched = await user.comparePassword(req.body.oldPassword)
     if (!isMatched) {
-        return next(new ErrorHandler('Stare hasło jest nieprawidłowe', 400));
+        return next(new ErrorHandler('Old password is incorrect'));
     }
 
     user.password = req.body.password;
@@ -230,7 +210,7 @@ exports.logout = catchAsyncErrors(async (req, res, next) => {
 
     res.status(200).json({
         success: true,
-        message: 'Wylogowano'
+        message: 'Logged out'
     })
 })
 
@@ -252,7 +232,7 @@ exports.getUserDetails = catchAsyncErrors(async (req, res, next) => {
     const user = await User.findById(req.params.id);
 
     if (!user) {
-        return next(new ErrorHandler(`Nie znaleziono użytkownika o ID: ${req.params.id}`))
+        return next(new ErrorHandler(`User does not found with id: ${req.params.id}`))
     }
 
     res.status(200).json({
@@ -289,8 +269,8 @@ exports.deleteUser = catchAsyncErrors(async (req, res, next) => {
     }
 
     // Remove avatar from cloudinary
-    // const image_id = user.avatar.public_id;
-    // await cloudinary.v2.uploader.destroy(image_id);
+    const image_id = user.avatar.public_id;
+    await cloudinary.v2.uploader.destroy(image_id);
 
     await user.remove();
 
