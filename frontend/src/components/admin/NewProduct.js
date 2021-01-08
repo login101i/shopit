@@ -20,18 +20,18 @@ const NewProduct = ({ history }) => {
     const [imagesPreview, setImagesPreview] = useState([])
 
     const categories = [
-        'Electronics',
-        'Cameras',
-        'Laptops',
-        'Accessories',
-        'Headphones',
-        'Food',
-        "Books",
-        'Clothes/Shoes',
-        'Beauty/Health',
-        'Sports',
+        'Elektronika',
+        'Kamery',
+        'Laptopy',
+        'Akcesoria',
+        'Słuchawki',
+        'Żywność',
+        "Książki",
+        'Ubrania/Buty',
+        'Strefa Piękna',
+        'Sport',
         'Outdoor',
-        'Home'
+        'Dom i Ogród'
     ]
 
     const alert = useAlert();

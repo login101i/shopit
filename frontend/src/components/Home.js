@@ -22,18 +22,18 @@ const Home = ({ match }) => {
     const [rating, setRating] = useState(0)
 
     const categories = [
-        'Electronics',
-        'Cameras',
-        'Laptops',
-        'Accessories',
-        'Headphones',
-        'Food',
-        "Books",
-        'Clothes/Shoes',
-        'Beauty/Health',
-        'Sports',
+        'Elektronika',
+        'Kamery',
+        'Laptopy',
+        'Akcesoria',
+        'Słuchawki',
+        'Żywność',
+        "Książki",
+        'Ubrania/Buty',
+        'Strefa Piękna',
+        'Sport',
         'Outdoor',
-        'Home'
+        'Dom i Ogród'
     ]
 
     const alert = useAlert();
@@ -79,15 +79,15 @@ const Home = ({ match }) => {
                                         <div className="px-5">
                                             <Range
                                                 marks={{
-                                                    1: `$1`,
-                                                    1000: `$1000`
+                                                    1: `1 zł`,
+                                                    1000: `2000 zł`
                                                 }}
                                                 min={1}
                                                 max={1000}
-                                                defaultValue={[1, 1000]}
-                                                tipFormatter={value => `$${value}`}
+                                                defaultValue={[1, 2000]}
+                                                tipFormatter={value => `${value} zł`}
                                                 tipProps={{
-                                                    placement: "top",
+                                                    placement: "bottom",
                                                     visible: true
                                                 }}
                                                 value={price}
@@ -134,6 +134,7 @@ const Home = ({ match }) => {
                                                             key={star}
                                                             onClick={() => setRating(star)}
                                                         >
+                                                            
                                                             <div className="rating-outer">
                                                                 <div className="rating-inner"
                                                                     style={{
@@ -142,9 +143,13 @@ const Home = ({ match }) => {
                                                                 >
                                                                 </div>
                                                             </div>
+
+
                                                         </li>
                                                     ))}
                                                 </ul>
+
+
                                             </div>
 
                                         </div>
@@ -174,10 +179,10 @@ const Home = ({ match }) => {
                                 itemsCountPerPage={resPerPage}
                                 totalItemsCount={productsCount}
                                 onChange={setCurrentPageNo}
-                                nextPageText={'Next'}
-                                prevPageText={'Prev'}
-                                firstPageText={'First'}
-                                lastPageText={'Last'}
+                                nextPageText={'Następny'}
+                                prevPageText={'Poprzedni'}
+                                firstPageText={'Pierwszy'}
+                                lastPageText={'Ostatni'}
                                 itemClass="page-item"
                                 linkClass="page-link"
                             />

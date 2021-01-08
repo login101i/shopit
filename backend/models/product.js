@@ -12,7 +12,7 @@ const productSchema = new mongoose.Schema({
     price: {
         type: Number,
         required: [true, 'Proszę wprowadź nazwę produktu'],
-        maxlength: [5, 'Proszę wprowadź max 5 cyft'],
+        maxlength: [5, 'Proszę wprowadź max 5 cyfr'],
         default: 0.0
     },
     description: {
@@ -22,7 +22,6 @@ const productSchema = new mongoose.Schema({
     ratings: {
         type: Number,
         default: 0,
-
     },
     images: [
         {
@@ -41,30 +40,30 @@ const productSchema = new mongoose.Schema({
         required: [true, 'Proszę wprowadź kategorię dla tego produktu'],
         enum: {
             values: [
-                'Electronics',
-                'Cameras',
-                'Laptops',
-                'Accessories',
-                'Headphones',
-                'Food',
-                "Books",
-                'Clothes/Shoes',
-                'Beauty/Health',
-                'Sports',
+                'Elektronika',
+                'Kamery',
+                'Laptopy',
+                'Akcesoria',
+                'Słuchawki',
+                'Żywność',
+                "Książki",
+                'Ubrania/Buty',
+                'Strefa Piękna',
+                'Sport',
                 'Outdoor',
-                'Home'
+                'Dom i Ogród'
             ],
             message: 'Proszę wybierz poprawną kategorię dla produktu.'
         }
     },
     seller: {
         type: String,
-        required: [true, 'Proszę wybierz product seller']
+        required: [true, 'Proszę wybierz sprzedawcę.']
     },
     stock: {
         type: Number,
-        required: [true, "Proszę wybierz product stock"],
-        maxlength: [5, 'Liczba produktu nie może przekroczyć pięciocufrowej liczby'],
+        required: [true, "Proszę wybierz stan magazynowy"],
+        maxlength: [5, 'Liczba produktu nie może przekroczyć pięciocyfrowej liczby.'],
         default: 0
     },
     numOfReviews: {

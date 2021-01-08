@@ -59,6 +59,8 @@ exports.loginUser = catchAsyncErrors(async (req, res, next) => {
     sendToken(user, 200, res)
 })
 
+
+
 // Forgot Password   =>  /api/v1/password/forgot
 exports.forgotPassword = catchAsyncErrors(async (req, res, next) => {
 
@@ -152,7 +154,7 @@ exports.updatePassword = catchAsyncErrors(async (req, res, next) => {
     // Check previous user password
     const isMatched = await user.comparePassword(req.body.oldPassword)
     if (!isMatched) {
-        return next(new ErrorHandler('Old password is incorrect'));
+        return next(new ErrorHandler('Old password is incorrect', 400));
     }
 
     user.password = req.body.password;

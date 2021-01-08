@@ -71,7 +71,7 @@ const Register = ({ history }) => {
     return (
         <Fragment>
 
-            <MetaData title={'Register User'} />
+            <MetaData title={'Rejestracja użytkownika'} />
 
             <div className="row wrapper">
                 <div className="col-10 col-lg-5">

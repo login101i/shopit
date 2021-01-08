@@ -4,8 +4,10 @@ const router = express.Router();
 const {
     registerUser,
     loginUser,
+    
     forgotPassword,
     resetPassword,
+
     getUserProfile,
     updatePassword,
     updateProfile,

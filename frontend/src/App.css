@@ -104,7 +104,7 @@ nav {
 
 .ratings {
   font-size: 1.2rem;
-  color: #fdcc0d;
+  color: #fd0d0d;
 }
 
 #no_of_reviews {
@@ -127,7 +127,7 @@ footer {
   display: inline-block;
   position: relative;
   font-family: FontAwesome;
-  color: #fdcc0d;
+  color: #105d8a;
 }
 
 .rating-outer::before {
@@ -145,7 +145,7 @@ footer {
 
 .rating-inner::before {
   content: '\f005 \f005 \f005 \f005 \f005';
-  color: #f8ce0b;
+  color: #76208b;
 }
 
 /* Product Details Page */
@@ -207,16 +207,16 @@ footer {
   height: 64px;
   margin: 8px;
   border-radius: 50%;
-  border: 6px solid #fa9c23;
-  border-color: #fa9c23 transparent;
-  animation: lds-dual-ring 1.2s linear infinite;
+  border: 6px solid #fa23c4;
+  border-color: #ad0d65 transparent;
+  animation: lds-dual-ring 2.9s ease-in-out infinite;
 }
 @keyframes lds-dual-ring {
   0% {
     transform: rotate(0deg);
   }
   100% {
-    transform: rotate(360deg);
+    transform: rotate(720deg);
   }
 }
 

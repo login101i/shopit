@@ -22,7 +22,7 @@ module.exports = (err, req, res, next) => {
 
         // Wrong Mongoose Object ID Error
         if (err.name === 'CastError') {
-            const message = `Resource not found. Invalid: ${err.path}`
+            const message = `Nie znaleziono źródła. Nieprawidłowe: ${err.path}`
             error = new ErrorHandler(message, 400)
         }
 

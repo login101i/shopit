@@ -56,14 +56,16 @@ exports.getProducts = catchAsyncErrors(async (req, res, next) => {
     apiFeatures.pagination(resPerPage)
     products = await apiFeatures.query;
 
+    setTimeout(() => {
+        res.status(200).json({
+            success: true,
+            productsCount,
+            resPerPage,
+            filteredProductsCount,
+            products
+        })
+    }, 3000)
 
-    res.status(200).json({
-        success: true,
-        productsCount,
-        resPerPage,
-        filteredProductsCount,
-        products
-    })
 
 })
 
@@ -226,6 +228,9 @@ exports.getProductReviews = catchAsyncErrors(async (req, res, next) => {
         reviews: product.reviews
     })
 })
+
+
+
 
 // Delete Product Review   =>   /api/v1/reviews
 exports.deleteReview = catchAsyncErrors(async (req, res, next) => {

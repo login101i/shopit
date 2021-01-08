@@ -13,10 +13,10 @@ const seedProducts = async () => {
     try {
 
         await Product.deleteMany();
-        console.log('Products are deleted');
+        console.log('Produkty zostały usunięte.');
 
         await Product.insertMany(products)
-        console.log('All Products are added.')
+        console.log('Dodano wszystkie produkty.')
 
         process.exit();
 
